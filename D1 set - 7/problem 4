@@ -1,0 +1,39 @@
+// 1. Design collections for passengers, flights, and bookings. [cite: 49]
+// 2. Insert sample documents maintaining relationships. [cite: 50]
+// Note: We use a referencing schema where bookings link passengers and flights.
+
+db.passengers.insertMany([
+  { _id: "P001", name: "John Doe", passport: "A1234567" },
+  { _id: "P002", name: "Jane Smith", passport: "B9876543" }
+]);
+
+db.flights.insertMany([
+  { _id: "F001", flightNumber: "BA123", origin: "JFK", destination: "LHR" },
+  { _id: "F002", flightNumber: "AF456", origin: "LHR", destination: "CDG" }
+]);
+
+db.bookings.insertMany([
+  { _id: "B001", passengerId: "P001", flightId: "F001", seatNumber: "12A", class: "Economy", status: "confirmed" },
+  { _id: "B002", passengerId: "P001", flightId: "F002", seatNumber: "4C", class: "Business", status: "confirmed" },
+  { _id: "B003", passengerId: "P002", flightId: "F001", seatNumber: "12B", class: "Economy", status: "pending" }
+]);
+
+// 3. Retrieve all bookings of a specific passenger. [cite: 51]
+db.bookings.find({ passengerId: "P001" });
+
+// 4. Update booking status (e.g., confirmed/cancelled). [cite: 52]
+db.bookings.updateOne(
+  { _id: "B003" },
+  { $set: { status: "cancelled" } }
+);
+
+// 5. Justify embedding vs referencing for this system. [cite: 53]
+/*
+   JUSTIFICATION:
+   Referencing is the best approach for this system. A passenger can book multiple 
+   flights, and a flight has multiple passengers (a many-to-many relationship). 
+   If we embedded bookings inside passengers, retrieving all passengers for a 
+   specific flight would be highly inefficient. By using referencing with a 
+   dedicated `bookings` collection, flight data and passenger data can scale 
+   independently without duplication.
+*/
