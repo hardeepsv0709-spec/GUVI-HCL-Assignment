@@ -1,0 +1,24 @@
+// 1. Create a cars collection and insert multiple car documents. [cite: 21]
+db.cars.insertMany([
+  { carId: "C001", model: "Toyota Corolla", type: "Sedan", rentalPricePerDay: 40, availabilityStatus: true, rating: 4.5 },
+  { carId: "C002", model: "Honda CR-V", type: "SUV", rentalPricePerDay: 65, availabilityStatus: true, rating: 4.8 },
+  { carId: "C003", model: "Ford Explorer", type: "SUV", rentalPricePerDay: 75, availabilityStatus: false, rating: 4.2 },
+  { carId: "C004", model: "Honda Civic", type: "Sedan", rentalPricePerDay: 45, availabilityStatus: true, rating: 4.6 },
+  { carId: "C005", model: "Hyundai Tucson", type: "SUV", rentalPricePerDay: 60, availabilityStatus: true, rating: 4.4 }
+]);
+
+// 2. Retrieve cars of a specific type (e.g., SUV). [cite: 22]
+db.cars.find({ type: "SUV" });
+
+// 3. Find cars within a rental price range. [cite: 23]
+db.cars.find({ rentalPricePerDay: { $gte: 40, $lte: 60 } });
+
+// 4. Sort cars by rating in descending order. [cite: 24]
+db.cars.find().sort({ rating: -1 });
+
+// 5. Update availability status for multiple cars using updateMany(). [cite: 25]
+// Example: Mark all SUVs as unavailable
+db.cars.updateMany(
+  { type: "SUV" },
+  { $set: { availabilityStatus: false } }
+);
