@@ -1,0 +1,24 @@
+// 1. Create a playlists collection and insert documents with a songs array. [cite: 35]
+db.playlists.insertMany([
+  { userId: "U101", playlistName: "Workout Vibes", songs: ["Song A", "Song B"], totalDuration: 45, createdDate: new Date() },
+  { userId: "U102", playlistName: "Chill Lo-Fi", songs: ["Song C", "Song D", "Song E"], totalDuration: 90, createdDate: new Date() },
+  { userId: "U101", playlistName: "Empty Playlist", songs: [], totalDuration: 0, createdDate: new Date() }
+]);
+
+// 2. Retrieve playlists created by a specific user. [cite: 36]
+db.playlists.find({ userId: "U101" });
+
+// 3. Add a new song to the playlist using $push. [cite: 37]
+db.playlists.updateOne(
+  { playlistName: "Workout Vibes", userId: "U101" },
+  { $push: { songs: "Song Z" } }
+);
+
+// 4. Update total duration of a playlist. [cite: 38]
+db.playlists.updateOne(
+  { playlistName: "Workout Vibes", userId: "U101" },
+  { $set: { totalDuration: 50 } }
+);
+
+// 5. Delete playlists with no songs. [cite: 39]
+db.playlists.deleteMany({ songs: { $size: 0 } });
