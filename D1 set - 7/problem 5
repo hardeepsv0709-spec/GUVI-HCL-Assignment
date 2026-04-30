@@ -1,0 +1,24 @@
+// 1. Create a videoLogs collection and insert multiple activity records. [cite: 64]
+db.videoLogs.insertMany([
+  { userId: "U001", videoId: "V001", watchTime: 120, deviceType: "Mobile", timestamp: new Date() },
+  { userId: "U002", videoId: "V002", watchTime: 45, deviceType: "TV", timestamp: new Date() },
+  { userId: "U001", videoId: "V003", watchTime: 300, deviceType: "Tablet", timestamp: new Date() },
+  { userId: "U003", videoId: "V001", watchTime: 10, deviceType: "Mobile", timestamp: new Date() },
+  { userId: "U002", videoId: "V001", watchTime: 60, deviceType: "TV", timestamp: new Date() }
+]);
+
+// 2. Retrieve logs for a specific user. [cite: 65]
+db.videoLogs.find({ userId: "U001" });
+
+// 3. Filter logs based on watch time and device type. [cite: 66]
+db.videoLogs.find({ 
+  watchTime: { $gt: 50 }, 
+  deviceType: "TV" 
+});
+
+// 4. Create indexes on userId and videoId. [cite: 67]
+db.videoLogs.createIndex({ userId: 1 });
+db.videoLogs.createIndex({ videoId: 1 });
+
+// 5. Use explain() to analyze and optimize query performance. [cite: 68]
+db.videoLogs.find({ userId: "U001", videoId: "V001" }).explain("executionStats");
