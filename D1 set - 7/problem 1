@@ -1,0 +1,26 @@
+// 1. Create a staff collection and insert one staff document. [cite: 11]
+db.staff.insertOne({
+  staffName: "Alice Johnson",
+  role: "doctor",
+  department: "Cardiology",
+  salary: 120000,
+  shiftTiming: "Morning"
+});
+
+// 2. Insert at least 5 staff records using insertMany(). [cite: 12]
+db.staff.insertMany([
+  { staffName: "Bob Smith", role: "nurse", department: "Pediatrics", salary: 65000, shiftTiming: "Night" },
+  { staffName: "Charlie Davis", role: "admin", department: "HR", salary: 50000, shiftTiming: "General" },
+  { staffName: "Diana Prince", role: "doctor", department: "Neurology", salary: 135000, shiftTiming: "Evening" },
+  { staffName: "Evan Wright", role: "nurse", department: "ER", salary: 70000, shiftTiming: "Night" },
+  { staffName: "Fiona Gallagher", role: "admin", department: "Billing", salary: 48000, shiftTiming: "General" }
+]);
+
+// 3. Retrieve all staff records using find(). [cite: 13]
+db.staff.find({});
+
+// 4. Display only staffName and department using projection. [cite: 14]
+db.staff.find({}, { staffName: 1, department: 1, _id: 0 });
+
+// 5. Delete a staff document based on staffName. [cite: 15]
+db.staff.deleteOne({ staffName: "Bob Smith" });
